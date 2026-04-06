@@ -13,7 +13,7 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
 def render_preprocessing(df, feature_names, target_name):
     """Render preprocessing section."""
 
-    st.markdown("## 🔧 Preprocessing Data")
+    st.markdown("## Preprocessing Data")
     st.markdown(
         """
         <div class="info-box">
@@ -25,10 +25,10 @@ def render_preprocessing(df, feature_names, target_name):
     )
 
     tab1, tab2, tab3, tab4 = st.tabs([
-        "1️⃣ Penanganan Missing Values",
-        "2️⃣ Feature Scaling",
-        "3️⃣ Encoding",
-        "4️⃣ Train-Test Split",
+        "1. Penanganan Missing Values",
+        "2. Feature Scaling",
+        "3. Encoding",
+        "4. Train-Test Split",
     ])
 
     with tab1:
@@ -46,13 +46,13 @@ def render_preprocessing(df, feature_names, target_name):
 
 def _render_missing_values(df, feature_names):
     """Handle missing values."""
-    st.markdown("### 1️⃣ Penanganan Missing Values")
+    st.markdown("### Penanganan Missing Values")
 
     missing = df[feature_names].isnull().sum()
     total_missing = missing.sum()
 
     if total_missing == 0:
-        st.success("✅ Dataset ini **tidak memiliki missing values**!")
+        st.success("Dataset ini tidak memiliki missing values.")
         st.markdown(
             """
             Namun, dalam praktik nyata, missing values sangat umum. Berikut strategi penanganannya:
@@ -67,7 +67,7 @@ def _render_missing_values(df, feature_names):
             """
         )
     else:
-        st.warning(f"⚠️ Terdapat **{total_missing}** missing values!")
+        st.warning(f"Terdapat **{total_missing}** missing values!")
         st.dataframe(
             missing[missing > 0].reset_index().rename(
                 columns={'index': 'Fitur', 0: 'Missing Count'}
@@ -76,8 +76,7 @@ def _render_missing_values(df, feature_names):
             hide_index=True,
         )
 
-    # Code example
-    st.markdown("#### 💻 Contoh Kode")
+    st.markdown("#### Contoh Kode")
     st.code(
         """
 import pandas as pd
@@ -103,12 +102,12 @@ df[categorical_cols] = imputer_cat.fit_transform(df[categorical_cols])
 
 def _render_scaling(df, feature_names):
     """Feature scaling demonstration."""
-    st.markdown("### 2️⃣ Feature Scaling")
+    st.markdown("### Feature Scaling")
 
     st.markdown(
         """
         <div class="warning-box">
-            <strong>⚠️ Mengapa Scaling Penting?</strong><br>
+            <strong>Mengapa Scaling Penting?</strong><br>
             Fitur dengan skala berbeda bisa mempengaruhi performa algoritma.
             Contoh: <em>age</em> (20-80) vs <em>income</em> (1.000.000-50.000.000).<br><br>
             <strong>Catatan:</strong> Decision Tree <strong>tidak memerlukan</strong> scaling,
@@ -140,8 +139,7 @@ def _render_scaling(df, feature_names):
             """
         )
 
-    # Interactive demo
-    st.markdown("#### 🔬 Demo Interaktif Scaling")
+    st.markdown("#### Demo Interaktif Scaling")
     demo_feat = st.selectbox("Pilih fitur:", feature_names[:5])
 
     original = df[demo_feat].values.reshape(-1, 1)
@@ -182,7 +180,7 @@ X_scaled = scaler.fit_transform(X_train)
 
 def _render_encoding(df, feature_names):
     """Encoding demonstration."""
-    st.markdown("### 3️⃣ Encoding Fitur Kategorikal")
+    st.markdown("### Encoding Fitur Kategorikal")
 
     st.markdown(
         """
@@ -190,16 +188,16 @@ def _render_encoding(df, feature_names):
 
         | Metode | Penjelasan | Contoh |
         |--------|-----------|--------|
-        | **Label Encoding** | Assign angka unik per kategori | Red→0, Blue→1, Green→2 |
-        | **One-Hot Encoding** | Buat kolom biner per kategori | Red→[1,0,0], Blue→[0,1,0] |
-        | **Ordinal Encoding** | Untuk data berurutan | Low→0, Medium→1, High→2 |
+        | **Label Encoding** | Assign angka unik per kategori | Red=0, Blue=1, Green=2 |
+        | **One-Hot Encoding** | Buat kolom biner per kategori | Red=[1,0,0], Blue=[0,1,0] |
+        | **Ordinal Encoding** | Untuk data berurutan | Low=0, Medium=1, High=2 |
         """
     )
 
     st.markdown(
         """
         <div class="info-box">
-            <strong>💡 Tips:</strong><br>
+            <strong>Tips:</strong><br>
             - <strong>Label Encoding</strong>: Untuk fitur ordinal atau algoritma tree-based<br>
             - <strong>One-Hot Encoding</strong>: Untuk fitur nominal (tanpa urutan)
         </div>
@@ -225,7 +223,7 @@ df_encoded = pd.get_dummies(df, columns=['color'], drop_first=True)
 
 def _render_split(df, feature_names, target_name):
     """Train-test split demonstration."""
-    st.markdown("### 4️⃣ Train-Test Split")
+    st.markdown("### Train-Test Split")
 
     st.markdown(
         """
@@ -264,7 +262,6 @@ def _render_split(df, feature_names, target_name):
         })
         st.dataframe(sizes, use_container_width=True, hide_index=True)
 
-        # Show class distribution
         if stratify:
             train_dist = y_train.value_counts(normalize=True).round(3)
             test_dist = y_test.value_counts(normalize=True).round(3)
@@ -277,11 +274,10 @@ def _render_split(df, feature_names, target_name):
             st.markdown("**Distribusi kelas (stratified):**")
             st.dataframe(dist_df, use_container_width=True, hide_index=True)
 
-    # Visualization
     fig = px.pie(
         sizes.head(2), values='Jumlah', names='Set',
         title=f"Split Ratio: {100-test_size}% Training / {test_size}% Testing",
-        color_discrete_sequence=['#667eea', '#f093fb'],
+        color_discrete_sequence=['#3a86ff', '#8338ec'],
         hole=0.4,
     )
     fig.update_layout(height=300, margin=dict(t=40, b=20))

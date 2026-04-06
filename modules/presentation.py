@@ -31,43 +31,37 @@ def render_presentation():
         _slide_thank_you,
     ]
 
-    # Initialize slide index
     if "slide_idx" not in st.session_state:
         st.session_state.slide_idx = 0
 
     total = len(slides)
     idx = st.session_state.slide_idx
 
-    # Navigation
     col_prev, col_info, col_next = st.columns([1, 3, 1])
 
     with col_prev:
-        if st.button("⬅️ Sebelumnya", disabled=(idx == 0), use_container_width=True):
+        if st.button("Sebelumnya", disabled=(idx == 0), use_container_width=True):
             st.session_state.slide_idx -= 1
             st.rerun()
 
     with col_info:
         st.markdown(
-            f"<div style='text-align:center; padding:8px; color:#667eea; font-weight:600;'>"
+            f"<div style='text-align:center; padding:8px; color:#3a86ff; font-weight:600;'>"
             f"Slide {idx + 1} / {total}</div>",
             unsafe_allow_html=True,
         )
 
     with col_next:
-        if st.button("Selanjutnya ➡️", disabled=(idx == total - 1), use_container_width=True):
+        if st.button("Selanjutnya", disabled=(idx == total - 1), use_container_width=True):
             st.session_state.slide_idx += 1
             st.rerun()
 
-    # Progress bar
     st.progress((idx + 1) / total)
-
     st.markdown("---")
 
-    # Render current slide
     slides[idx]()
 
-    # Slide selector (compact)
-    with st.expander("📑 Daftar Semua Slide"):
+    with st.expander("Daftar Semua Slide"):
         slide_names = [
             "1. Cover",
             "2. Outline Materi",
@@ -106,19 +100,19 @@ def _slide_cover():
         """
         <div style="text-align:center; padding: 40px 20px;">
             <h1 style="font-size:2.8rem; color:#1a1a2e; margin-bottom:0.5rem;">
-                🎓 Kuliah Tamu
+                Kuliah Tamu
             </h1>
-            <h2 style="font-size:1.8rem; color:#667eea; margin-bottom:1rem;">
+            <h2 style="font-size:1.8rem; color:#3a86ff; margin-bottom:1rem;">
                 Membangun Model Prediksi
             </h2>
             <h3 style="font-size:1.4rem; color:#555; font-weight:400;">
                 Klasifikasi Data dengan<br>
                 <strong>Decision Tree</strong> & <strong>Naive Bayes</strong>
             </h3>
-            <hr style="width:200px; margin:30px auto; border-color:#667eea;">
+            <hr style="width:200px; margin:30px auto; border-color:#3a86ff;">
             <p style="font-size:1.1rem; color:#888;">
-                📅 Kamis, 2026<br>
-                🏫 Sesi Kuliah Tamu — Program Studi Informatika
+                Kamis, 2026<br>
+                Sesi Kuliah Tamu — Program Studi Informatika
             </p>
         </div>
         """,
@@ -127,7 +121,7 @@ def _slide_cover():
 
 
 def _slide_outline():
-    st.markdown("## 📋 Outline Materi")
+    st.markdown("## Outline Materi")
     st.markdown("---")
 
     col1, col2 = st.columns(2)
@@ -165,7 +159,7 @@ def _slide_outline():
 
 
 def _slide_what_is_ml():
-    st.markdown("## 🤖 Apa itu Machine Learning?")
+    st.markdown("## Apa itu Machine Learning?")
     st.markdown("---")
 
     st.markdown(
@@ -187,7 +181,7 @@ def _slide_what_is_ml():
     with col1:
         st.markdown(
             """
-            ### 📘 Supervised Learning
+            ### Supervised Learning
             - Belajar dari data **berlabel**
             - Contoh: Klasifikasi, Regresi
             - *"Guru memberi contoh soal & jawaban"*
@@ -197,7 +191,7 @@ def _slide_what_is_ml():
     with col2:
         st.markdown(
             """
-            ### 📗 Unsupervised Learning
+            ### Unsupervised Learning
             - Belajar dari data **tanpa label**
             - Contoh: Clustering, Dimensionality Reduction
             - *"Siswa mengelompokkan sendiri"*
@@ -207,7 +201,7 @@ def _slide_what_is_ml():
     with col3:
         st.markdown(
             """
-            ### 📙 Reinforcement Learning
+            ### Reinforcement Learning
             - Belajar dari **reward/punishment**
             - Contoh: Game AI, Robotics
             - *"Belajar dari trial & error"*
@@ -216,7 +210,7 @@ def _slide_what_is_ml():
 
 
 def _slide_supervised_learning():
-    st.markdown("## 📘 Supervised Learning")
+    st.markdown("## Supervised Learning")
     st.markdown("---")
 
     st.markdown(
@@ -234,35 +228,35 @@ def _slide_supervised_learning():
     with col1:
         st.markdown(
             """
-            ### 🏷️ Klasifikasi
+            ### Klasifikasi
             Output berupa **kategori/kelas diskrit**
 
             | Input | Output |
             |-------|--------|
-            | Email → | Spam / Tidak Spam |
-            | Gambar → | Kucing / Anjing |
-            | Data Pasien → | Sakit / Sehat |
+            | Email | Spam / Tidak Spam |
+            | Gambar | Kucing / Anjing |
+            | Data Pasien | Sakit / Sehat |
             """
         )
 
     with col2:
         st.markdown(
             """
-            ### 📈 Regresi
+            ### Regresi
             Output berupa **nilai kontinu**
 
             | Input | Output |
             |-------|--------|
-            | Luas rumah → | Harga (Rp) |
-            | Pengalaman → | Gaji (Rp) |
-            | Suhu → | Penjualan es |
+            | Luas rumah | Harga (Rp) |
+            | Pengalaman | Gaji (Rp) |
+            | Suhu | Penjualan es |
             """
         )
 
     st.markdown(
         """
         <div class="warning-box">
-            <strong>💡 Hari ini fokus:</strong> Klasifikasi menggunakan Decision Tree & Naive Bayes
+            <strong>Fokus hari ini:</strong> Klasifikasi menggunakan Decision Tree & Naive Bayes
         </div>
         """,
         unsafe_allow_html=True,
@@ -270,7 +264,7 @@ def _slide_supervised_learning():
 
 
 def _slide_classification_intro():
-    st.markdown("## 🎯 Pengenalan Klasifikasi")
+    st.markdown("## Pengenalan Klasifikasi")
     st.markdown("---")
 
     st.markdown(
@@ -285,29 +279,29 @@ def _slide_classification_intro():
 
     st.markdown(
         """
-        ### 📌 Contoh Kasus Nyata
+        ### Contoh Kasus Nyata
 
         | Domain | Problem | Kelas |
         |--------|---------|-------|
-        | 🏥 Kesehatan | Diagnosis penyakit jantung | Sakit / Sehat |
-        | 📧 Email | Deteksi spam | Spam / Bukan Spam |
-        | 🏦 Perbankan | Deteksi fraud | Fraud / Legitimate |
-        | 🎓 Pendidikan | Prediksi kelulusan | Lulus / Tidak Lulus |
-        | 🛒 E-commerce | Prediksi pembelian | Beli / Tidak Beli |
+        | Kesehatan | Diagnosis penyakit jantung | Sakit / Sehat |
+        | Email | Deteksi spam | Spam / Bukan Spam |
+        | Perbankan | Deteksi fraud | Fraud / Legitimate |
+        | Pendidikan | Prediksi kelulusan | Lulus / Tidak Lulus |
+        | E-commerce | Prediksi pembelian | Beli / Tidak Beli |
 
-        ### 📊 Algoritma Klasifikasi Populer
-        - 🌳 Decision Tree
-        - 📊 Naive Bayes
-        - 🧠 Neural Network / Deep Learning
-        - 📏 K-Nearest Neighbors (KNN)
-        - 📐 Support Vector Machine (SVM)
-        - 🌲 Random Forest
+        ### Algoritma Klasifikasi Populer
+        - Decision Tree
+        - Naive Bayes
+        - Neural Network / Deep Learning
+        - K-Nearest Neighbors (KNN)
+        - Support Vector Machine (SVM)
+        - Random Forest
         """
     )
 
 
 def _slide_decision_tree_concept():
-    st.markdown("## 🌳 Decision Tree — Konsep")
+    st.markdown("## Decision Tree — Konsep")
     st.markdown("---")
 
     st.markdown(
@@ -326,19 +320,19 @@ def _slide_decision_tree_concept():
 
     st.markdown(
         """
-        ### 🌲 Analogi Sederhana
+        ### Analogi Sederhana
 
         ```
         Apakah cuaca cerah?
-        ├── Ya → Apakah angin kencang?
-        │       ├── Ya  → ❌ Tidak bermain
-        │       └── Tidak → ✅ Bermain
-        └── Tidak → Apakah hujan?
-                ├── Ya  → ❌ Tidak bermain
-                └── Tidak → ✅ Bermain
+        |-- Ya --> Apakah angin kencang?
+        |          |-- Ya  --> [Tidak bermain]
+        |          +-- Tidak --> [Bermain]
+        +-- Tidak --> Apakah hujan?
+                   |-- Ya  --> [Tidak bermain]
+                   +-- Tidak --> [Bermain]
         ```
 
-        ### 🔑 Komponen Decision Tree
+        ### Komponen Decision Tree
         - **Root Node**: Node paling atas (pertanyaan pertama)
         - **Internal Node**: Node percabangan (pertanyaan lanjutan)
         - **Leaf Node**: Node akhir (keputusan/kelas)
@@ -348,12 +342,12 @@ def _slide_decision_tree_concept():
 
 
 def _slide_decision_tree_how():
-    st.markdown("## 🌳 Cara Kerja Decision Tree")
+    st.markdown("## Cara Kerja Decision Tree")
     st.markdown("---")
 
     st.markdown(
         """
-        ### ⚙️ Proses Pembangunan Decision Tree
+        ### Proses Pembangunan Decision Tree
 
         1. **Pilih atribut terbaik** sebagai root node
            - Gunakan kriteria splitting (Information Gain / Gini Index)
@@ -368,27 +362,27 @@ def _slide_decision_tree_how():
 
     st.markdown(
         """
-        ### 📊 Contoh: Prediksi Penyakit Jantung
+        ### Contoh: Prediksi Penyakit Jantung
 
         ```
         [Seluruh Data: 300 pasien]
                     |
             Chest Pain Type?
-            /          \\
-        Type 0-1      Type 2-3
-        [180 pasien]  [120 pasien]
-            |              |
-        Max Heart Rate?   Age > 55?
-        /       \\        /       \\
-      >150     ≤150    Ya      Tidak
-      ✅Sehat  ⚠️Cek   ❌Sakit  ⚠️Cek
+            /              \\
+        Type 0-1          Type 2-3
+        [180 pasien]      [120 pasien]
+            |                  |
+        Max Heart Rate?    Age > 55?
+        /       \\          /       \\
+      >150     <=150     Ya      Tidak
+      [Sehat]  [Cek]    [Sakit]  [Cek]
         ```
         """
     )
 
 
 def _slide_decision_tree_splitting():
-    st.markdown("## 🌳 Splitting Criteria")
+    st.markdown("## Splitting Criteria")
     st.markdown("---")
 
     col1, col2 = st.columns(2)
@@ -396,7 +390,7 @@ def _slide_decision_tree_splitting():
     with col1:
         st.markdown(
             """
-            ### 📐 Information Gain (ID3 / C4.5)
+            ### Information Gain (ID3 / C4.5)
 
             Berbasis **Entropy** (ukuran ketidakteraturan):
 
@@ -413,7 +407,7 @@ def _slide_decision_tree_splitting():
     with col2:
         st.markdown(
             """
-            ### 📏 Gini Index (CART)
+            ### Gini Index (CART)
 
             Mengukur **impurity** (ketidakmurnian):
 
@@ -430,7 +424,7 @@ def _slide_decision_tree_splitting():
     st.markdown(
         """
         <div class="warning-box">
-            <strong>💡 Catatan:</strong> Scikit-learn menggunakan <strong>Gini Index</strong> sebagai default
+            <strong>Catatan:</strong> Scikit-learn menggunakan <strong>Gini Index</strong> sebagai default
             untuk DecisionTreeClassifier, tetapi mendukung juga <strong>Entropy</strong>.
         </div>
         """,
@@ -439,7 +433,7 @@ def _slide_decision_tree_splitting():
 
 
 def _slide_decision_tree_pros_cons():
-    st.markdown("## 🌳 Decision Tree — Pro & Kontra")
+    st.markdown("## Decision Tree — Kelebihan & Kekurangan")
     st.markdown("---")
 
     col1, col2 = st.columns(2)
@@ -447,7 +441,7 @@ def _slide_decision_tree_pros_cons():
     with col1:
         st.markdown(
             """
-            ### ✅ Kelebihan
+            ### Kelebihan
             - **Mudah dipahami** & divisualisasikan
             - **Tidak perlu normalisasi** data
             - Bisa menangani data **numerik & kategorikal**
@@ -460,7 +454,7 @@ def _slide_decision_tree_pros_cons():
     with col2:
         st.markdown(
             """
-            ### ❌ Kekurangan
+            ### Kekurangan
             - Rentan terhadap **overfitting**
             - **Tidak stabil** — perubahan kecil pada data bisa mengubah tree
             - Cenderung bias pada fitur dengan banyak level
@@ -472,7 +466,7 @@ def _slide_decision_tree_pros_cons():
     st.markdown(
         """
         <div class="success-box">
-            <strong>🛡️ Solusi Overfitting:</strong> Gunakan <em>pruning</em>
+            <strong>Solusi Overfitting:</strong> Gunakan <em>pruning</em>
             (max_depth, min_samples_leaf) atau gunakan <strong>Random Forest</strong> (ensemble).
         </div>
         """,
@@ -481,7 +475,7 @@ def _slide_decision_tree_pros_cons():
 
 
 def _slide_naive_bayes_concept():
-    st.markdown("## 📊 Naive Bayes — Konsep")
+    st.markdown("## Naive Bayes — Konsep")
     st.markdown("---")
 
     st.markdown(
@@ -497,29 +491,29 @@ def _slide_naive_bayes_concept():
 
     st.markdown(
         """
-        ### 🧠 Intuisi
+        ### Intuisi
 
         **Bayangkan seorang dokter** mendiagnosis pasien:
         - Dokter sudah tahu **probabilitas umum** penyakit jantung (prior)
         - Pasien datang dengan **gejala tertentu** (evidence)
         - Dokter **mengupdate keyakinannya** berdasarkan gejala (posterior)
 
-        ### 🔑 Konsep Kunci
+        ### Konsep Kunci
         - **Prior**: Probabilitas awal sebelum melihat data ($P(C)$)
         - **Likelihood**: Probabilitas fitur mengingat kelas ($P(X|C)$)
         - **Evidence**: Probabilitas fitur ($P(X)$)
-        - **Posterior**: Probabilitas kelas mengingat fitur ($P(C|X)$) ← **yang kita cari!**
+        - **Posterior**: Probabilitas kelas mengingat fitur ($P(C|X)$) — **yang kita cari!**
         """
     )
 
 
 def _slide_naive_bayes_theorem():
-    st.markdown("## 📊 Teorema Bayes")
+    st.markdown("## Teorema Bayes")
     st.markdown("---")
 
     st.markdown(
         """
-        ### 📐 Formula Teorema Bayes
+        ### Formula Teorema Bayes
 
         $$P(C|X) = \\frac{P(X|C) \\cdot P(C)}{P(X)}$$
 
@@ -530,11 +524,11 @@ def _slide_naive_bayes_theorem():
         | $P(C)$ | **Prior** | Probabilitas awal kelas C |
         | $P(X)$ | **Evidence** | Probabilitas fitur X (normalisasi) |
 
-        ### 🔧 Dengan Asumsi "Naive" (Independen)
+        ### Dengan Asumsi "Naive" (Independen)
 
         $$P(X|C) = P(x_1|C) \\cdot P(x_2|C) \\cdot ... \\cdot P(x_n|C) = \\prod_{i=1}^{n} P(x_i|C)$$
 
-        ### 🎯 Keputusan Klasifikasi
+        ### Keputusan Klasifikasi
 
         $$\\hat{y} = \\arg\\max_{c} P(C=c) \\prod_{i=1}^{n} P(x_i|C=c)$$
         """
@@ -542,7 +536,7 @@ def _slide_naive_bayes_theorem():
 
 
 def _slide_naive_bayes_types():
-    st.markdown("## 📊 Tipe-Tipe Naive Bayes")
+    st.markdown("## Tipe-Tipe Naive Bayes")
     st.markdown("---")
 
     col1, col2, col3 = st.columns(3)
@@ -550,26 +544,26 @@ def _slide_naive_bayes_types():
     with col1:
         st.markdown(
             """
-            ### 📈 Gaussian NB
+            ### Gaussian NB
             - Fitur berdistribusi **normal**
             - Cocok untuk data **kontinu**
-            - Estimasi μ dan σ per kelas
+            - Estimasi mean dan std per kelas
 
             $$P(x_i|C) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}} e^{-\\frac{(x_i - \\mu)^2}{2\\sigma^2}}$$
 
-            📌 **Paling umum digunakan**
+            **Paling umum digunakan**
             """
         )
 
     with col2:
         st.markdown(
             """
-            ### 📝 Multinomial NB
+            ### Multinomial NB
             - Fitur berupa **frekuensi/count**
             - Cocok untuk **text classification**
             - Menggunakan distribusi multinomial
 
-            📌 **Aplikasi:**
+            **Aplikasi:**
             - Spam detection
             - Sentiment analysis
             - Document classification
@@ -579,12 +573,12 @@ def _slide_naive_bayes_types():
     with col3:
         st.markdown(
             """
-            ### ✅ Bernoulli NB
+            ### Bernoulli NB
             - Fitur berupa **biner (0/1)**
             - Cocok untuk data **boolean**
             - Menggunakan distribusi Bernoulli
 
-            📌 **Aplikasi:**
+            **Aplikasi:**
             - Ada/tidak ada kata
             - Feature presence
             - Binary attributes
@@ -593,7 +587,7 @@ def _slide_naive_bayes_types():
 
 
 def _slide_naive_bayes_pros_cons():
-    st.markdown("## 📊 Naive Bayes — Pro & Kontra")
+    st.markdown("## Naive Bayes — Kelebihan & Kekurangan")
     st.markdown("---")
 
     col1, col2 = st.columns(2)
@@ -601,7 +595,7 @@ def _slide_naive_bayes_pros_cons():
     with col1:
         st.markdown(
             """
-            ### ✅ Kelebihan
+            ### Kelebihan
             - **Sangat cepat** (training & prediksi)
             - Bekerja baik dengan **dataset kecil**
             - Efektif untuk **high-dimensional data**
@@ -614,7 +608,7 @@ def _slide_naive_bayes_pros_cons():
     with col2:
         st.markdown(
             """
-            ### ❌ Kekurangan
+            ### Kekurangan
             - Asumsi independensi **jarang terpenuhi**
             - Estimasi probabilitas bisa **kurang akurat**
             - Tidak menangkap **interaksi antar fitur**
@@ -626,7 +620,7 @@ def _slide_naive_bayes_pros_cons():
     st.markdown(
         """
         <div class="success-box">
-            <strong>💡 Tips:</strong> Meskipun asumsi independensi jarang terpenuhi sepenuhnya,
+            <strong>Tips:</strong> Meskipun asumsi independensi jarang terpenuhi sepenuhnya,
             Naive Bayes sering memberikan <strong>hasil yang surprisingly baik</strong> dalam praktik!
         </div>
         """,
@@ -635,7 +629,7 @@ def _slide_naive_bayes_pros_cons():
 
 
 def _slide_evaluation_metrics():
-    st.markdown("## 📏 Metrik Evaluasi Model")
+    st.markdown("## Metrik Evaluasi Model")
     st.markdown("---")
 
     st.markdown(
@@ -647,20 +641,20 @@ def _slide_evaluation_metrics():
         | **Recall** | $\\frac{TP}{TP + FN}$ | Dari yang sebenarnya positif, berapa yang terdeteksi? |
         | **F1-Score** | $2 \\times \\frac{Precision \\times Recall}{Precision + Recall}$ | Harmonik mean dari Precision & Recall |
 
-        ### 🔑 Kapan Menggunakan Metrik Apa?
+        ### Kapan Menggunakan Metrik Apa?
 
         | Skenario | Metrik Utama | Alasan |
         |----------|-------------|--------|
-        | 🏥 Diagnosis penyakit | **Recall** | Jangan sampai ada pasien sakit yang terlewat |
-        | 📧 Filter spam | **Precision** | Jangan sampai email penting masuk spam |
-        | ⚖️ Balanced | **F1-Score** | Keseimbangan precision & recall |
+        | Diagnosis penyakit | **Recall** | Jangan sampai ada pasien sakit yang terlewat |
+        | Filter spam | **Precision** | Jangan sampai email penting masuk spam |
+        | Balanced | **F1-Score** | Keseimbangan precision & recall |
         | Data seimbang | **Accuracy** | Proporsi kelas merata |
         """
     )
 
 
 def _slide_confusion_matrix():
-    st.markdown("## 📊 Confusion Matrix")
+    st.markdown("## Confusion Matrix")
     st.markdown("---")
 
     st.markdown(
@@ -677,23 +671,23 @@ def _slide_confusion_matrix():
         """
         |  | **Prediksi: Positif** | **Prediksi: Negatif** |
         |--|----------------------|----------------------|
-        | **Aktual: Positif** | ✅ True Positive (TP) | ❌ False Negative (FN) |
-        | **Aktual: Negatif** | ❌ False Positive (FP) | ✅ True Negative (TN) |
+        | **Aktual: Positif** | True Positive (TP) | False Negative (FN) |
+        | **Aktual: Negatif** | False Positive (FP) | True Negative (TN) |
 
-        ### 📌 Penjelasan
-        - **TP**: Model prediksi Positif, dan memang Positif ✅
-        - **TN**: Model prediksi Negatif, dan memang Negatif ✅
-        - **FP**: Model prediksi Positif, padahal Negatif ❌ (Type I Error)
-        - **FN**: Model prediksi Negatif, padahal Positif ❌ (Type II Error)
+        ### Penjelasan
+        - **TP**: Model prediksi Positif, dan memang Positif (benar)
+        - **TN**: Model prediksi Negatif, dan memang Negatif (benar)
+        - **FP**: Model prediksi Positif, padahal Negatif (Type I Error)
+        - **FN**: Model prediksi Negatif, padahal Positif (Type II Error)
         """
     )
 
     st.markdown(
         """
         <div class="warning-box">
-            <strong>⚠️ Contoh Medis:</strong><br>
-            FN (False Negative) = Pasien <strong>sakit</strong> tapi didiagnosis <strong>sehat</strong> → <strong>Berbahaya!</strong><br>
-            FP (False Positive) = Pasien <strong>sehat</strong> tapi didiagnosis <strong>sakit</strong> → Perlu tes lanjutan
+            <strong>Contoh Medis:</strong><br>
+            FN (False Negative) = Pasien <strong>sakit</strong> tapi didiagnosis <strong>sehat</strong> — <strong>Berbahaya!</strong><br>
+            FP (False Positive) = Pasien <strong>sehat</strong> tapi didiagnosis <strong>sakit</strong> — Perlu tes lanjutan
         </div>
         """,
         unsafe_allow_html=True,
@@ -701,56 +695,56 @@ def _slide_confusion_matrix():
 
 
 def _slide_workflow():
-    st.markdown("## 🔄 Workflow Machine Learning")
+    st.markdown("## Workflow Machine Learning")
     st.markdown("---")
 
     st.markdown(
         """
         ```
-        ┌─────────────────┐
-        │ 1. PENGUMPULAN   │    Kumpulkan data dari sumber yang relevan
-        │    DATA          │
-        └────────┬────────┘
-                 │
-        ┌────────▼────────┐
-        │ 2. EKSPLORASI    │    EDA: Pahami distribusi, korelasi, outlier
-        │    DATA (EDA)    │
-        └────────┬────────┘
-                 │
-        ┌────────▼────────┐
-        │ 3. PREPROCESSING │    Cleaning, encoding, scaling, split data
-        │                  │
-        └────────┬────────┘
-                 │
-        ┌────────▼────────┐
-        │ 4. PEMILIHAN &   │    Pilih algoritma, latih model
-        │    TRAINING MODEL│
-        └────────┬────────┘
-                 │
-        ┌────────▼────────┐
-        │ 5. EVALUASI      │    Accuracy, Precision, Recall, F1, CM
-        │    MODEL         │
-        └────────┬────────┘
-                 │
-        ┌────────▼────────┐
-        │ 6. DEPLOYMENT    │    Deploy model ke production
-        │    & PREDIKSI    │
-        └─────────────────┘
+        +-------------------+
+        | 1. PENGUMPULAN    |    Kumpulkan data dari sumber yang relevan
+        |    DATA           |
+        +---------+---------+
+                  |
+        +---------v---------+
+        | 2. EKSPLORASI     |    EDA: Pahami distribusi, korelasi, outlier
+        |    DATA (EDA)     |
+        +---------+---------+
+                  |
+        +---------v---------+
+        | 3. PREPROCESSING  |    Cleaning, encoding, scaling, split data
+        |                   |
+        +---------+---------+
+                  |
+        +---------v---------+
+        | 4. PEMILIHAN &    |    Pilih algoritma, latih model
+        |    TRAINING MODEL |
+        +---------+---------+
+                  |
+        +---------v---------+
+        | 5. EVALUASI       |    Accuracy, Precision, Recall, F1, CM
+        |    MODEL          |
+        +---------+---------+
+                  |
+        +---------v---------+
+        | 6. DEPLOYMENT     |    Deploy model ke production
+        |    & PREDIKSI     |
+        +-------------------+
         ```
 
-        > **Hari ini kita akan mempraktikkan semua langkah ini secara interaktif!** 🚀
+        > **Hari ini kita akan mempraktikkan semua langkah ini secara interaktif!**
         """
     )
 
 
 def _slide_comparison():
-    st.markdown("## ⚖️ Decision Tree vs Naive Bayes")
+    st.markdown("## Decision Tree vs Naive Bayes")
     st.markdown("---")
 
     st.markdown(
         """
-        | Aspek | 🌳 Decision Tree | 📊 Naive Bayes |
-        |-------|-----------------|----------------|
+        | Aspek | Decision Tree | Naive Bayes |
+        |-------|--------------|-------------|
         | **Pendekatan** | Rule-based (if-then) | Probabilistik |
         | **Interpretasi** | Sangat mudah (visual tree) | Cukup mudah (probabilitas) |
         | **Kecepatan Training** | Sedang | Sangat Cepat |
@@ -768,7 +762,7 @@ def _slide_comparison():
 
 
 def _slide_real_world():
-    st.markdown("## 🌍 Aplikasi Dunia Nyata")
+    st.markdown("## Aplikasi Dunia Nyata")
     st.markdown("---")
 
     col1, col2 = st.columns(2)
@@ -776,31 +770,31 @@ def _slide_real_world():
     with col1:
         st.markdown(
             """
-            ### 🌳 Decision Tree
-            - 🏥 **Diagnosis medis** — Sistem pendukung keputusan klinis
-            - 🏦 **Credit scoring** — Kelayakan kredit
-            - 🏭 **Quality control** — Deteksi produk cacat
-            - 📱 **Customer churn** — Prediksi pelanggan keluar
-            - 🌾 **Pertanian** — Klasifikasi jenis tanah
+            ### Decision Tree
+            - **Diagnosis medis** — Sistem pendukung keputusan klinis
+            - **Credit scoring** — Kelayakan kredit
+            - **Quality control** — Deteksi produk cacat
+            - **Customer churn** — Prediksi pelanggan keluar
+            - **Pertanian** — Klasifikasi jenis tanah
             """
         )
 
     with col2:
         st.markdown(
             """
-            ### 📊 Naive Bayes
-            - 📧 **Email filtering** — Deteksi spam
-            - 💬 **Sentiment analysis** — Analisis opini
-            - 📰 **News classification** — Kategorisasi berita
-            - 🩺 **Medical diagnosis** — Screening awal
-            - 🔍 **Recommendation** — Sistem rekomendasi
+            ### Naive Bayes
+            - **Email filtering** — Deteksi spam
+            - **Sentiment analysis** — Analisis opini
+            - **News classification** — Kategorisasi berita
+            - **Medical diagnosis** — Screening awal
+            - **Recommendation** — Sistem rekomendasi
             """
         )
 
     st.markdown(
         """
         <div class="success-box">
-            <strong>🔬 Fun Fact:</strong> Google menggunakan variasi Naive Bayes untuk
+            <strong>Fun Fact:</strong> Google menggunakan variasi Naive Bayes untuk
             spam filtering di Gmail, dan Decision Tree (via Random Forest/XGBoost) banyak
             digunakan di kompetisi Kaggle!
         </div>
@@ -810,13 +804,13 @@ def _slide_real_world():
 
 
 def _slide_demo_intro():
-    st.markdown("## 🚀 Saatnya Demo!")
+    st.markdown("## Saatnya Demo!")
     st.markdown("---")
 
     st.markdown(
         """
         <div style="text-align:center; padding:30px;">
-            <h3 style="color:#667eea;">Mari kita praktikkan teori yang sudah dipelajari!</h3>
+            <h3 style="color:#3a86ff;">Mari kita praktikkan teori yang sudah dipelajari!</h3>
             <p style="font-size:1.1rem; color:#555;">
                 Gunakan <strong>menu navigasi di sidebar</strong> untuk mengakses setiap tahap:
             </p>
@@ -830,10 +824,10 @@ def _slide_demo_intro():
     with col1:
         st.markdown(
             """
-            ### 📊 Eksplorasi Data
+            ### Eksplorasi Data
             Pahami data sebelum modeling
 
-            ### 🔧 Preprocessing
+            ### Preprocessing
             Siapkan data untuk training
             """
         )
@@ -841,10 +835,10 @@ def _slide_demo_intro():
     with col2:
         st.markdown(
             """
-            ### 🤖 Pemodelan
+            ### Pemodelan
             Training Decision Tree & Naive Bayes
 
-            ### ⚖️ Perbandingan
+            ### Perbandingan
             Bandingkan performa kedua model
             """
         )
@@ -852,10 +846,10 @@ def _slide_demo_intro():
     with col3:
         st.markdown(
             """
-            ### 🔮 Prediksi
+            ### Prediksi
             Coba prediksi data baru secara live!
 
-            ### 📈 Visualisasi
+            ### Visualisasi
             Grafik & chart interaktif
             """
         )
@@ -865,19 +859,19 @@ def _slide_thank_you():
     st.markdown(
         """
         <div style="text-align:center; padding:50px 20px;">
-            <h1 style="font-size:3rem; color:#667eea;">🙏 Terima Kasih!</h1>
+            <h1 style="font-size:3rem; color:#1a1a2e;">Terima Kasih</h1>
             <h3 style="color:#555; font-weight:400; margin-top:1rem;">
                 Semoga materi ini bermanfaat!
             </h3>
-            <hr style="width:200px; margin:30px auto; border-color:#667eea;">
+            <hr style="width:200px; margin:30px auto; border-color:#3a86ff;">
             <p style="font-size:1.1rem; color:#888;">
                 <strong>Sesi Tanya Jawab</strong><br>
-                Silakan ajukan pertanyaan 💬
+                Silakan ajukan pertanyaan
             </p>
             <br>
             <p style="font-size:0.9rem; color:#aaa;">
-                📧 Hubungi saya untuk diskusi lebih lanjut<br>
-                🔗 Source code tersedia di GitHub
+                Hubungi saya untuk diskusi lebih lanjut<br>
+                Source code tersedia di GitHub
             </p>
         </div>
         """,

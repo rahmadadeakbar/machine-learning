@@ -12,21 +12,25 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.preprocessing import StandardScaler
 
 
+DT_COLOR = "#3a86ff"
+NB_COLOR = "#8338ec"
+
+
 def render_prediction(df, feature_names, target_name, target_labels, dataset_choice):
     """Render interactive prediction section."""
 
-    st.markdown("## 🔮 Prediksi Interaktif")
+    st.markdown("## Prediksi Interaktif")
     st.markdown(
         """
         <div class="info-box">
             Masukkan nilai fitur secara manual dan lihat hasil prediksi dari kedua model
-            secara <strong>real-time</strong>!
+            secara <strong>real-time</strong>.
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    # ─── Train models in background ───────────────────────────
+    # Train models
     X = df[feature_names].values
     y = df[target_name].values
 
@@ -43,8 +47,8 @@ def render_prediction(df, feature_names, target_name, target_labels, dataset_cho
     nb = GaussianNB()
     nb.fit(X_train_scaled, y_train)
 
-    # ─── Input Form ────────────────────────────────────────────
-    st.markdown("### 📝 Masukkan Data untuk Prediksi")
+    # Input Form
+    st.markdown("### Masukkan Data untuk Prediksi")
 
     input_method = st.radio(
         "Metode Input:", ["Manual Input", "Random Sample dari Dataset"],
@@ -63,7 +67,6 @@ def render_prediction(df, feature_names, target_name, target_labels, dataset_cho
                 max_val = float(df[feat].max())
                 mean_val = float(df[feat].mean())
 
-                # Check if feature appears to be integer
                 if df[feat].dtype in ['int64', 'int32'] and df[feat].nunique() < 10:
                     unique_vals = sorted(df[feat].unique())
                     input_values[feat] = st.selectbox(
@@ -82,7 +85,7 @@ def render_prediction(df, feature_names, target_name, target_labels, dataset_cho
                         key=f"pred_{feat}",
                     )
     else:
-        if st.button("🎲 Ambil Sample Acak", use_container_width=True):
+        if st.button("Ambil Sample Acak", use_container_width=True):
             st.session_state['random_sample_idx'] = np.random.randint(0, len(df))
 
         sample_idx = st.session_state.get('random_sample_idx', 0)
@@ -119,22 +122,19 @@ def render_prediction(df, feature_names, target_name, target_labels, dataset_cho
 
     st.markdown("---")
 
-    # ─── Make Prediction ───────────────────────────────────────
-    if st.button("🚀 **Prediksi Sekarang!**", use_container_width=True, type="primary"):
+    if st.button("**Prediksi Sekarang**", use_container_width=True, type="primary"):
         input_array = np.array([[input_values[f] for f in feature_names]])
         input_scaled = scaler.transform(input_array)
 
-        # Decision Tree prediction
         dt_pred = dt.predict(input_array)[0]
         dt_proba = dt.predict_proba(input_array)[0]
 
-        # Naive Bayes prediction
         nb_pred = nb.predict(input_scaled)[0]
         nb_proba = nb.predict_proba(input_scaled)[0]
 
         labels = [target_labels.get(i, str(i)) for i in sorted(target_labels.keys())]
 
-        st.markdown("### 🎯 Hasil Prediksi")
+        st.markdown("### Hasil Prediksi")
 
         col1, col2 = st.columns(2)
 
@@ -144,11 +144,11 @@ def render_prediction(df, feature_names, target_name, target_labels, dataset_cho
 
             st.markdown(
                 f"""
-                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                     border-radius: 16px; padding: 2rem; text-align: center; color: white;">
-                    <h3 style="color: white; margin-bottom: 0.5rem;">🌳 Decision Tree</h3>
+                <div style="background: {DT_COLOR};
+                     border-radius: 12px; padding: 2rem; text-align: center; color: white;">
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Decision Tree</h3>
                     <h2 style="color: white; font-size: 2rem;">{dt_label}</h2>
-                    <p style="color: #e0d4f5;">Confidence: <strong>{dt_conf:.1f}%</strong></p>
+                    <p style="color: rgba(255,255,255,0.85);">Confidence: <strong>{dt_conf:.1f}%</strong></p>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -160,11 +160,11 @@ def render_prediction(df, feature_names, target_name, target_labels, dataset_cho
 
             st.markdown(
                 f"""
-                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-                     border-radius: 16px; padding: 2rem; text-align: center; color: white;">
-                    <h3 style="color: white; margin-bottom: 0.5rem;">📊 Naive Bayes</h3>
+                <div style="background: {NB_COLOR};
+                     border-radius: 12px; padding: 2rem; text-align: center; color: white;">
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Naive Bayes</h3>
                     <h2 style="color: white; font-size: 2rem;">{nb_label}</h2>
-                    <p style="color: #fde0e0;">Confidence: <strong>{nb_conf:.1f}%</strong></p>
+                    <p style="color: rgba(255,255,255,0.85);">Confidence: <strong>{nb_conf:.1f}%</strong></p>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -172,12 +172,11 @@ def render_prediction(df, feature_names, target_name, target_labels, dataset_cho
 
         st.markdown("")
 
-        # Agreement check
         if dt_pred == nb_pred:
             st.markdown(
                 """
                 <div class="success-box">
-                    ✅ <strong>Kedua model sepakat!</strong> Prediksi konsisten dari Decision Tree dan Naive Bayes.
+                    <strong>Kedua model sepakat.</strong> Prediksi konsisten dari Decision Tree dan Naive Bayes.
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -186,22 +185,22 @@ def render_prediction(df, feature_names, target_name, target_labels, dataset_cho
             st.markdown(
                 """
                 <div class="warning-box">
-                    ⚠️ <strong>Model tidak sepakat!</strong> Decision Tree dan Naive Bayes memberikan prediksi berbeda.
+                    <strong>Model tidak sepakat.</strong> Decision Tree dan Naive Bayes memberikan prediksi berbeda.
                     Perhatikan probabilitas masing-masing untuk keputusan lebih lanjut.
                 </div>
                 """,
                 unsafe_allow_html=True,
             )
 
-        # ─── Probability Details ───────────────────────────────
-        st.markdown("### 📊 Detail Probabilitas")
+        # Probability Details
+        st.markdown("### Detail Probabilitas")
 
         col1, col2 = st.columns(2)
 
         with col1:
             fig = go.Figure(go.Bar(
                 x=labels, y=dt_proba,
-                marker_color=['#667eea' if i == dt_pred else '#c4c4c4'
+                marker_color=[DT_COLOR if i == dt_pred else '#c4c4c4'
                                for i in sorted(target_labels.keys())],
                 text=[f"{p:.3f}" for p in dt_proba],
                 textposition='outside',
@@ -216,7 +215,7 @@ def render_prediction(df, feature_names, target_name, target_labels, dataset_cho
         with col2:
             fig = go.Figure(go.Bar(
                 x=labels, y=nb_proba,
-                marker_color=['#f093fb' if i == nb_pred else '#c4c4c4'
+                marker_color=[NB_COLOR if i == nb_pred else '#c4c4c4'
                                for i in sorted(target_labels.keys())],
                 text=[f"{p:.3f}" for p in nb_proba],
                 textposition='outside',
@@ -228,14 +227,14 @@ def render_prediction(df, feature_names, target_name, target_labels, dataset_cho
             )
             st.plotly_chart(fig, use_container_width=True)
 
-        # ─── Input Summary ─────────────────────────────────────
-        st.markdown("### 📋 Ringkasan Input")
+        # Input Summary
+        st.markdown("### Ringkasan Input")
         summary_df = pd.DataFrame({
             'Fitur': feature_names,
             'Nilai Input': [input_values[f] for f in feature_names],
             'Mean Dataset': [df[f].mean().round(3) for f in feature_names],
             'Std Dataset': [df[f].std().round(3) for f in feature_names],
-            'Status': ['⬆️ Di atas rata-rata' if input_values[f] > df[f].mean() else '⬇️ Di bawah rata-rata'
+            'Status': ['Di atas rata-rata' if input_values[f] > df[f].mean() else 'Di bawah rata-rata'
                         for f in feature_names],
         })
         st.dataframe(summary_df, use_container_width=True, hide_index=True)
